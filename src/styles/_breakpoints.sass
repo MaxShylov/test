@@ -1,0 +1,36 @@
+$width-small-phone: 390px
+$width-large-phone: 414px
+$width-phone: 576px
+$width-tablet: 768px
+$width-laptop: 992px
+$width-desktop: 1200px
+$width-large: 1600px
+
+@mixin breakpoint($point, $height: null)
+  @if $point == mobileonly
+    @media screen and (max-width: $width-phone)
+      @content
+  @else if $point == mobile
+    @media screen and (min-width: $width-small-phone)
+      @content
+  @else if $point == phablet
+    @media screen and (min-width: $width-large-phone)
+      @content
+  @else if $point == tablet
+    @media screen and (min-width: $width-tablet)
+      @content
+  @else if $point == laptop
+    @media screen and (min-width: $width-laptop)
+      @content
+  @else if $point == desktop
+    @if $height
+      @media screen and (min-width: $width-desktop) and (min-height: $height)
+        @content
+    @else
+      @media screen and (min-width: $width-desktop)
+        @content
+  @else if $point == large
+    @media screen and (min-width: $width-laptop)
+      @content
+  @else
+    @warn $point + " not found. Breakpoint mixin supports: large, desktop, laptop, tablet, phablet, mobileonly"

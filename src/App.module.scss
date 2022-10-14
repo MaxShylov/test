@@ -1,0 +1,12 @@
+.wrap {
+  margin-left: 200px;
+  transition: all .2s;
+
+  &.collapsed {
+    margin-left: 95px;
+  }
+
+  &.small {
+    margin-left: 0;
+  }
+}

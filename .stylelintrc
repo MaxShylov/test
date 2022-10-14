@@ -1,0 +1,21 @@
+{
+  "extends": ["stylelint-config-prettier"],
+  "plugins": ["stylelint-scss"],
+  "rules": {
+    "at-rule-empty-line-before": [
+      "always",
+      {
+        "ignore": ["first-nested", "after-comment"],
+        "ignoreAtRules": ["value", "import", "include", "if", "else"]
+      }
+    ],
+    "at-rule-no-unknown": null,
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {
+        "ignorePseudoClasses": ["global"]
+      }
+    ],
+    "string-quotes": "double"
+  }
+}

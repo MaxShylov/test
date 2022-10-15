@@ -1,18 +1,24 @@
-import { useAppSelector, useAppDispatch } from './redux';
+import { useState, useEffect } from 'react';
 
-import { setUser } from '../store/userSlice';
+import type { User } from '@firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
+
+import { auth } from 'firebase-config';
 
 export const useAuth = () => {
-  const user = useAppSelector(state => state.user);
-  const token = localStorage.token as string;
-  const dispatch = useAppDispatch();
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [isLoading, setLoading] = useState(true);
 
-  if (!user.token && token) {
-    dispatch(setUser({ token }));
-  }
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, user => {
+      setCurrentUser(user);
+      setLoading(false);
+    });
 
-  return {
-    isAuth: Boolean(user.token),
-    token: user.token,
-  };
+    return () => {
+      unsub();
+    };
+  }, []);
+
+  return [currentUser, isLoading];
 };

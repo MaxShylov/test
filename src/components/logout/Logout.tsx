@@ -1,26 +1,35 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 
 import { LogoutOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
+import { signOut } from 'firebase/auth';
 
-import { useAppDispatch } from 'hooks';
-
-import { removeUser } from '../../store/userSlice';
+import { auth } from 'firebase-config';
 
 type LogoutProps = {
   className?: string;
 };
 
 export const Logout: FC<LogoutProps> = ({ className }) => {
-  const dispatch = useAppDispatch();
+  const [isLoading, setLoading] = useState(false);
 
   const handleClick = useCallback(() => {
-    dispatch(removeUser());
-    localStorage.removeItem('token');
-  }, [dispatch]);
+    setLoading(true);
+    const logout = async () => {
+      await signOut(auth);
+    };
+
+    logout().finally(() => setLoading(false));
+  }, []);
 
   return (
-    <Button className={className} danger icon={<LogoutOutlined />} onClick={handleClick}>
+    <Button
+      className={className}
+      danger
+      icon={<LogoutOutlined />}
+      loading={isLoading}
+      onClick={handleClick}
+    >
       Logout
     </Button>
   );

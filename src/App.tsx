@@ -1,6 +1,6 @@
 import React, { FC, useMemo, useState, createElement } from 'react';
 
-import { Layout } from 'antd';
+import { Layout, Spin } from 'antd';
 import cn from 'classnames';
 import { Navigate, Routes, Route } from 'react-router-dom';
 
@@ -15,7 +15,7 @@ export const App: FC = () => {
   const [isCollapsed, setCollapsed] = useState(false);
   const [isSmall, setSmall] = useState(false);
 
-  const { isAuth } = useAuth();
+  const [user, isLoading] = useAuth();
 
   const classesContentLayout = cn(styles.wrap, {
     [styles.collapsed]: isCollapsed,
@@ -30,7 +30,15 @@ export const App: FC = () => {
     [],
   );
 
-  if (!isAuth) {
+  if (isLoading) {
+    return (
+      <div className={styles.spin}>
+        <Spin size="large" />
+      </div>
+    );
+  }
+
+  if (!user) {
     return (
       <Routes>
         <Route element={<SignIn />} path="/sign-in" />

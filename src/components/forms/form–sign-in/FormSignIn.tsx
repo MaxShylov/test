@@ -1,12 +1,10 @@
 import React, { FC, useState, useCallback, useEffect } from 'react';
 
-import { Alert, Checkbox, Form as AntForm } from 'antd';
-import type { CheckboxChangeEvent } from 'antd/es/checkbox';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { Alert } from 'antd';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
-import { useAppDispatch } from 'hooks/redux';
+import { auth } from 'firebase-config';
 
-import { setUser } from '../../../store/userSlice';
 import { Form, Field } from '../form';
 
 type FormValues = {
@@ -18,37 +16,16 @@ type FormValues = {
 let timeoutId: NodeJS.Timeout;
 
 export const FormSignIn: FC = () => {
-  const dispatch = useAppDispatch();
   const [isError, setError] = useState(false);
   const [isLoading, setLoading] = useState(false);
-  const [isRemember, setRemember] = useState(false);
 
-  const handleChangeRemember = useCallback(
-    (e: CheckboxChangeEvent) => setRemember(e.target.checked),
-    [],
-  );
+  const handleSubmit = useCallback(({ email, password }: FormValues) => {
+    setLoading(true);
 
-  const handleSubmit = useCallback(
-    ({ email, password, remember }: FormValues) => {
-      setLoading(true);
-
-      const auth = getAuth();
-
-      signInWithEmailAndPassword(auth, email, password)
-        .then(async ({ user }) => {
-          const token = await user.getIdToken();
-
-          dispatch(setUser({ token }));
-
-          if (isRemember) {
-            localStorage.setItem('token', token);
-          }
-        })
-        .catch(() => setError(true))
-        .finally(() => setLoading(false));
-    },
-    [dispatch, isRemember],
-  );
+    signInWithEmailAndPassword(auth, email, password)
+      .catch(() => setError(true))
+      .finally(() => setLoading(false));
+  }, []);
 
   useEffect(() => {
     if (isError) {
@@ -65,9 +42,6 @@ export const FormSignIn: FC = () => {
       <Form buttonLabel="Sign In" isLoading={isLoading} onSubmit={handleSubmit}>
         <Field label="Email" name="email" required />
         <Field label="Password" name="password" required type="password" />
-        <AntForm.Item>
-          <Checkbox onChange={handleChangeRemember}>Remember me</Checkbox>
-        </AntForm.Item>
       </Form>
       {isError && (
         <Alert

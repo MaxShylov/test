@@ -12,7 +12,6 @@
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "prettier"
   ],
-  "overrides": [],
   "parserOptions": {
     "project": "./tsconfig.json"
   },
@@ -31,6 +30,14 @@
       }
     }
   },
+  "overrides": [
+    {
+      "files": ["src/store/*.ts"],
+      "rules": {
+        "no-param-reassign": ["error", {"ignorePropertyModificationsForRegex": ["^state$"]}]
+      }
+    }
+  ],
   "rules": {
     "no-console": "warn",
     "no-debugger": "error",

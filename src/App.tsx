@@ -2,9 +2,10 @@ import React, { FC, useMemo, useState, createElement } from 'react';
 
 import { Layout } from 'antd';
 import cn from 'classnames';
-import { BrowserRouter as Router, Navigate, Routes, Route } from 'react-router-dom';
+import { Navigate, Routes, Route } from 'react-router-dom';
 
 import { ContentBody, ContentFooter, ContentHeader, LeftSider } from 'components';
+import { useAuth } from 'hooks';
 import { SignIn } from 'pages';
 import routes from 'routes';
 
@@ -14,7 +15,7 @@ export const App: FC = () => {
   const [isCollapsed, setCollapsed] = useState(false);
   const [isSmall, setSmall] = useState(false);
 
-  const auth = false;
+  const { isAuth } = useAuth();
 
   const classesContentLayout = cn(styles.wrap, {
     [styles.collapsed]: isCollapsed,
@@ -29,36 +30,32 @@ export const App: FC = () => {
     [],
   );
 
-  if (!auth) {
+  if (!isAuth) {
     return (
-      <Router>
-        <Routes>
-          <Route element={<SignIn />} path="/sign-in" />
-          <Route element={<Navigate to="/sign-in" />} path="*" />
-        </Routes>
-      </Router>
+      <Routes>
+        <Route element={<SignIn />} path="/sign-in" />
+        <Route element={<Navigate to="/sign-in" />} path="*" />
+      </Routes>
     );
   }
 
   return (
     <Layout>
-      <Router>
-        <>
-          <LeftSider onBreakpoint={setSmall} onCollapse={setCollapsed} />
+      <>
+        <LeftSider onBreakpoint={setSmall} onCollapse={setCollapsed} />
 
-          <Layout className={classesContentLayout}>
-            <ContentHeader />
-            <ContentBody>
-              <Routes>
-                {renderRoutes}
-                <Route element={<Navigate to="/translations" />} path="/" />
-                <Route element={<Navigate to="/" />} path="*" />
-              </Routes>
-            </ContentBody>
-            <ContentFooter />
-          </Layout>
-        </>
-      </Router>
+        <Layout className={classesContentLayout}>
+          <ContentHeader />
+          <ContentBody>
+            <Routes>
+              {renderRoutes}
+              <Route element={<Navigate to="/translations" />} path="/" />
+              <Route element={<Navigate to="/" />} path="*" />
+            </Routes>
+          </ContentBody>
+          <ContentFooter />
+        </Layout>
+      </>
     </Layout>
   );
 };

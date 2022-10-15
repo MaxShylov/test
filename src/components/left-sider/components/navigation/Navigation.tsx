@@ -3,8 +3,8 @@ import React, { useMemo, createElement, FC } from 'react';
 import { Menu } from 'antd';
 import { NavLink } from 'react-router-dom';
 
+import { useCurrentRoute } from 'hooks';
 import routes from 'routes';
-import { useCurrentRoute } from 'utils/hooks';
 
 const { Item } = Menu;
 

@@ -1,8 +1,9 @@
 import React, { useCallback, useMemo, useState } from 'react';
 
-import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
-import { Layout, Menu } from 'antd';
+import { Layout } from 'antd';
+import { NavLink } from 'react-router-dom';
 
+import { Logo, Navigation } from './components';
 import styles from './LeftSider.module.scss';
 
 const { Sider } = Layout;
@@ -28,19 +29,11 @@ export const LeftSider = ({ onBreakpoint, onCollapse: handleCollapse }) => {
       onBreakpoint={handleBreakpoint}
       onCollapse={handleCollapse}
     >
-      <div className="logo" />
-      <Menu
-        defaultSelectedKeys={['4']}
-        items={[UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined].map(
-          (icon, index) => ({
-            icon: React.createElement(icon),
-            key: String(index + 1),
-            label: `nav ${index + 1}`,
-          }),
-        )}
-        mode="inline"
-        theme="dark"
-      />
+      <NavLink to="/">
+        <Logo />
+      </NavLink>
+
+      <Navigation />
     </Sider>
   );
 };

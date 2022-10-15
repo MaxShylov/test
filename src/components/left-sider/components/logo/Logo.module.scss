@@ -1,0 +1,11 @@
+.wrap {
+  margin: 16px;
+  display: flex;
+  justify-content: center;
+
+  svg {
+    width: 70%;
+    height: auto;
+    fill: #fff;
+  }
+}

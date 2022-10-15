@@ -6,7 +6,7 @@ const { Content } = Layout;
 
 // import styles from './ContentBody.module.scss';
 
-export const ContentBody = () => (
+export const ContentBody = ({ children }) => (
   <Content
     style={{
       margin: '24px 16px 0',
@@ -19,65 +19,7 @@ export const ContentBody = () => (
         padding: 24,
       }}
     >
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content content
-      content content content content content content content content content content
+      {children}
     </div>
   </Content>
 );

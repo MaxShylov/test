@@ -1,20 +1,34 @@
+import { FC } from 'react';
+
 import { FontSizeOutlined, ReadOutlined, CommentOutlined } from '@ant-design/icons';
 
-import { Posts, Reviews, Translations } from 'pages';
+import { Posts, Reviews, Translations } from './pages';
 
-const routes = [
+export interface IRoute {
+  element: FC;
+  icon: FC;
+  id: string;
+  name: string;
+  path: string;
+}
+
+const routes: IRoute[] = [
   {
     element: Translations,
-    exact: true,
     icon: FontSizeOutlined,
     id: 'translations',
     name: 'Translations',
     path: '/translations',
   },
-  { element: Posts, exact: true, icon: ReadOutlined, id: 'posts', name: 'Posts', path: '/posts' },
+  {
+    element: Posts,
+    icon: ReadOutlined,
+    id: 'posts',
+    name: 'Posts',
+    path: '/posts',
+  },
   {
     element: Reviews,
-    exact: true,
     icon: CommentOutlined,
     id: 'reviews',
     name: 'Reviews',

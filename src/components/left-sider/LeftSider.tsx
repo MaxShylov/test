@@ -1,6 +1,7 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState, FC } from 'react';
 
 import { Layout } from 'antd';
+import { SiderProps } from 'antd/lib/layout/Sider';
 import { NavLink } from 'react-router-dom';
 
 import { Logo, Navigation } from './components';
@@ -8,14 +9,19 @@ import styles from './LeftSider.module.scss';
 
 const { Sider } = Layout;
 
-export const LeftSider = ({ onBreakpoint, onCollapse: handleCollapse }) => {
+type LeftSiderProps = Pick<SiderProps, 'onBreakpoint' | 'onCollapse'>;
+
+export const LeftSider: FC<LeftSiderProps> = ({ onBreakpoint, onCollapse: handleCollapse }) => {
   const [isSmall, setSmall] = useState(false);
   const collapsedWidth = useMemo(() => (isSmall ? 0 : 80), [isSmall]);
 
   const handleBreakpoint = useCallback(
-    broken => {
+    (broken: boolean) => {
       setSmall(broken);
-      onBreakpoint(broken);
+
+      if (onBreakpoint) {
+        onBreakpoint(broken);
+      }
     },
     [onBreakpoint],
   );

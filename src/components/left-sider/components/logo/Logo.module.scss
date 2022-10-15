@@ -1,11 +1,19 @@
+@import "src/styles/breakpoints";
+
 .wrap {
   margin: 16px;
   display: flex;
   justify-content: center;
 
   svg {
-    width: 70%;
+    width: 120px;
+    min-width: 120px;
     height: auto;
     fill: #fff;
+
+    @include breakpoint(laptop) {
+      min-width: 70%;
+      width: 70%;
+    }
   }
 }

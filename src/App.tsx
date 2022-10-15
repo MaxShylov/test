@@ -1,15 +1,15 @@
-import React, { useMemo, useState, createElement } from 'react';
+import React, { FC, useMemo, useState, createElement } from 'react';
 
 import { Layout } from 'antd';
 import cn from 'classnames';
 import { Route, BrowserRouter as Router, Navigate, Routes } from 'react-router-dom';
 
 import { ContentBody, ContentFooter, ContentHeader, LeftSider } from 'components';
-import routes from 'routes';
 
 import styles from './App.module.scss';
+import routes from './routes';
 
-const App = () => {
+export const App: FC = () => {
   const [isCollapsed, setCollapsed] = useState(false);
   const [isSmall, setSmall] = useState(false);
 
@@ -20,8 +20,8 @@ const App = () => {
 
   const renderRoutes = useMemo(
     () =>
-      routes.map(({ element, exact, id, path }) => (
-        <Route key={id} element={createElement(element)} exact={exact} path={path} />
+      routes.map(({ element, id, path }) => (
+        <Route key={id} element={createElement(element)} path={path} />
       )),
     [],
   );
@@ -48,5 +48,3 @@ const App = () => {
     </Layout>
   );
 };
-
-export default App;

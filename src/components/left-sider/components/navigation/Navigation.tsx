@@ -1,4 +1,4 @@
-import React, { useMemo, createElement, useState, useEffect } from 'react';
+import React, { useMemo, createElement, useState, useEffect, FC } from 'react';
 
 import { Menu } from 'antd';
 import { NavLink, useLocation } from 'react-router-dom';
@@ -7,9 +7,9 @@ import routes from 'routes';
 
 const { Item } = Menu;
 
-export const Navigation = () => {
+export const Navigation: FC = () => {
   const { pathname } = useLocation();
-  const [selectedKeys, setSelectedKeys] = useState();
+  const [selectedKeys, setSelectedKeys] = useState<string[]>();
 
   useEffect(() => {
     const currentRoute = routes.find(route => route.path === pathname);

@@ -1,6 +1,7 @@
 .wrap {
   margin-left: 200px;
   transition: all .2s;
+  height: 100vh;
 
   &.collapsed {
     margin-left: 95px;

@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { FC } from 'react';
 
-import { Layout } from 'antd';
+import { Layout, Typography } from 'antd';
+
+import { useCurrentRoute } from 'utils/hooks';
+
+import styles from './ContentHeader.module.scss';
 
 const { Header } = Layout;
+const { Title } = Typography;
 
-// import styles from './ContentHeader.module.scss';
+export const ContentHeader: FC = () => {
+  const route = useCurrentRoute();
 
-export const ContentHeader = () => (
-  <Header
-    className="site-layout-sub-header-background"
-    style={{
-      padding: 0,
-    }}
-  />
-);
+  return (
+    <Header className={styles.wrap}>
+      <Title level={3}>{route?.name}</Title>
+    </Header>
+  );
+};

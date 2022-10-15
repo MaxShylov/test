@@ -2,16 +2,19 @@ import React, { FC, useMemo, useState, createElement } from 'react';
 
 import { Layout } from 'antd';
 import cn from 'classnames';
-import { Route, BrowserRouter as Router, Navigate, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Navigate, Routes, Route } from 'react-router-dom';
 
 import { ContentBody, ContentFooter, ContentHeader, LeftSider } from 'components';
+import { SignIn } from 'pages';
+import routes from 'routes';
 
 import styles from './App.module.scss';
-import routes from './routes';
 
 export const App: FC = () => {
   const [isCollapsed, setCollapsed] = useState(false);
   const [isSmall, setSmall] = useState(false);
+
+  const auth = false;
 
   const classesContentLayout = cn(styles.wrap, {
     [styles.collapsed]: isCollapsed,
@@ -25,6 +28,17 @@ export const App: FC = () => {
       )),
     [],
   );
+
+  if (!auth) {
+    return (
+      <Router>
+        <Routes>
+          <Route element={<SignIn />} path="/sign-in" />
+          <Route element={<Navigate to="/sign-in" />} path="*" />
+        </Routes>
+      </Router>
+    );
+  }
 
   return (
     <Layout>

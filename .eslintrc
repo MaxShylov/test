@@ -66,6 +66,7 @@
     "react/jsx-sort-props": "error",
     "react/prop-types": "off",
     "react/display-name": "off",
+    "react/require-default-props": "warn",
 
     "prettier/prettier": [
       "error",

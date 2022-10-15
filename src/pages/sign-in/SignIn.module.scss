@@ -1,0 +1,23 @@
+@import "src/styles/breakpoints";
+
+.wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 50px;
+}
+
+.content {
+  width: 80%;
+  max-width: 400px;
+}
+
+.logo {
+  margin-bottom: 50px;
+
+  svg {
+    max-width: 500px;
+    min-width: 70%;
+    width: 70%;
+  }
+}

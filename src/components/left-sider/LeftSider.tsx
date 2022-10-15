@@ -4,7 +4,9 @@ import { Layout } from 'antd';
 import { SiderProps } from 'antd/lib/layout/Sider';
 import { NavLink } from 'react-router-dom';
 
-import { Logo, Navigation } from './components';
+import { Logo } from 'components/logo';
+
+import { Navigation } from './components';
 import styles from './LeftSider.module.scss';
 
 const { Sider } = Layout;

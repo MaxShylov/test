@@ -1,59 +1,56 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 
-import { Table } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
+import { Table, Button } from 'antd';
 import type { ColumnsType, TableProps } from 'antd/es/table';
 
+import api from 'api';
+
+import { RemoveTranslation } from './components';
 import styles from './TranslationsTable.module.scss';
 
 interface DataType {
-  key: React.Key;
-  name: string;
-  age: number;
-  address: string;
+  id: string;
+  key: string;
+  textUk: string;
+  textEn: string;
+  createAt: number;
 }
+
+const textSorter = (prop: keyof DataType) => (a: DataType, b: DataType) =>
+  a[prop] > b[prop] ? 1 : -1;
 
 const columns: ColumnsType<DataType> = [
   {
-    dataIndex: 'name',
-    sorter: (a, b) => a.name.length - b.name.length,
-    title: 'Name',
+    dataIndex: 'id',
+    title: 'ID',
   },
   {
-    dataIndex: 'age',
+    dataIndex: 'key',
+    sorter: textSorter('key'),
+    title: 'Key',
+  },
+  {
+    dataIndex: 'textUk',
+    sorter: textSorter('textUk'),
+    title: 'Text Uk',
+  },
+  {
+    dataIndex: 'textEn',
+    sorter: textSorter('textEn'),
+    title: 'Text En',
+  },
+  {
+    dataIndex: 'createAt',
     defaultSortOrder: 'descend',
-    sorter: (a, b) => a.age - b.age,
-    title: 'Age',
+    render: (ms: number) => new Date(ms).toLocaleString(),
+    sorter: (a, b) => a.createAt - b.createAt,
+    title: 'Create At',
   },
   {
-    dataIndex: 'address',
-    title: 'Address',
-  },
-];
-
-const data = [
-  {
-    address: 'New York No. 1 Lake Park',
-    age: 32,
-    key: '1',
-    name: 'John Brown',
-  },
-  {
-    address: 'London No. 1 Lake Park',
-    age: 42,
-    key: '2',
-    name: 'Jim Green',
-  },
-  {
-    address: 'Sidney No. 1 Lake Park',
-    age: 32,
-    key: '3',
-    name: 'Joe Black',
-  },
-  {
-    address: 'London No. 2 Lake Park',
-    age: 32,
-    key: '4',
-    name: 'Jim Red',
+    key: 'action',
+    render: ({ id }: DataType) => <RemoveTranslation id={id} />,
+    title: 'Action',
   },
 ];
 
@@ -61,12 +58,22 @@ const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter,
   console.log('params', pagination, filters, sorter, extra);
 };
 
-type TranslationsTableProps = {
-  data?: any;
-};
+export const TranslationsTable: FC = () => {
+  const [data, setData] = useState<DataType[]>([]);
 
-export const TranslationsTable: FC<TranslationsTableProps> = () => (
-  <div>
-    <Table columns={columns} dataSource={data} onChange={onChange} />
-  </div>
-);
+  useEffect(() => {
+    const unsub = api.watchAllTranslations((err, translations) => {
+      setData(translations as DataType[]);
+    });
+
+    return () => {
+      unsub();
+    };
+  }, []);
+
+  return (
+    <div>
+      <Table columns={columns} dataSource={data} onChange={onChange} showSorterTooltip={false} />
+    </div>
+  );
+};

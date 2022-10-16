@@ -47,6 +47,7 @@
     "sort-destructure-keys/sort-destructure-keys": "error",
     "sort-exports/sort-exports": "error",
 
+    "import/no-cycle": "warn",
     "import/prefer-default-export": "off",
     "import/order": [
       "warn",
@@ -74,6 +75,8 @@
     "react/prop-types": "off",
     "react/display-name": "off",
     "react/require-default-props": "warn",
+
+    "@typescript-eslint/no-floating-promises": "warn",
 
     "prettier/prettier": [
       "error",

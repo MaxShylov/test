@@ -4,3 +4,4 @@ export * from './content-header';
 export * from './left-sider';
 export * from './logo';
 export * from './logout';
+export * from './translations';

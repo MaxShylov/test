@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 
-import { DeleteOutlined } from '@ant-design/icons';
-import { Table, Button } from 'antd';
+import { Table } from 'antd';
 import type { ColumnsType, TableProps } from 'antd/es/table';
 
 import api from 'api';
@@ -22,10 +21,7 @@ const textSorter = (prop: keyof DataType) => (a: DataType, b: DataType) =>
 
 const columns: ColumnsType<DataType> = [
   {
-    dataIndex: 'id',
-    title: 'ID',
-  },
-  {
+    className: styles.cellKey,
     dataIndex: 'key',
     sorter: textSorter('key'),
     title: 'Key',
@@ -41,6 +37,7 @@ const columns: ColumnsType<DataType> = [
     title: 'Text En',
   },
   {
+    className: styles.cellCreateAt,
     dataIndex: 'createAt',
     defaultSortOrder: 'descend',
     render: (ms: number) => new Date(ms).toLocaleString(),
@@ -48,6 +45,7 @@ const columns: ColumnsType<DataType> = [
     title: 'Create At',
   },
   {
+    className: styles.cellAction,
     key: 'action',
     render: ({ id }: DataType) => <RemoveTranslation id={id} />,
     title: 'Action',
@@ -72,8 +70,12 @@ export const TranslationsTable: FC = () => {
   }, []);
 
   return (
-    <div>
-      <Table columns={columns} dataSource={data} onChange={onChange} showSorterTooltip={false} />
-    </div>
+    <Table
+      className={styles.table}
+      columns={columns}
+      dataSource={data}
+      onChange={onChange}
+      showSorterTooltip={false}
+    />
   );
 };
